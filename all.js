@@ -48,8 +48,36 @@ let data = [
   const travelText=document.querySelector('.travelText');
 
 
+//   function showCard(){
+//     travelInfo+=
+//     `
+//     <li>
+//     <span class="location">${item.area}</span>
+//     <span class="starlevel">${item.rate}</span>
+//     <img src="${item.imgUrl}"alt="">
+//     <div class="travelDescription">
+//         <h2>${item.name}</h2>
+//         <p>${item.description}</p>
+//         <div class="travelCost">
+//             <span><i class="fas fa-exclamation-circle"></i>剩下最後 ${item.group} 組</span>
+//             <p>TWD<span>${item.price}</span></p>
+//         </div>
+//     </div>
+// </li>
+//     `
+// }
+
+
   //新增套票
   addBtn.addEventListener('click',function(){
+    if(searchLocation.value==''||travelName.value==''||travelImg.value==''||travelLocation.value==''
+    ||travelPrice.value==''||travelLevel.value==''||travelGroup.value==''||travelText.value==''){
+        alert('請確實填寫所有欄位');
+        
+    }
+    else if(travelLevel.value>10||travelLevel.value<1){
+        alert('套票星級必須在1~10之間');
+    }else{
       let obj={};
       obj.id=data.length;
       obj.name=travelName.value;
@@ -63,6 +91,14 @@ let data = [
       showTravelInfo();
       showSearchNum.textContent=``;
       searchLocation.value="地區搜尋";
+      travelName.value='';
+      travelImg.value='';
+      travelLocation.value='選擇景點地區';
+      travelText.value='';
+      travelGroup.value='';
+      travelPrice.value='';
+      travelLevel.value='';
+    }
   })
 
 
@@ -70,22 +106,22 @@ let data = [
   function showTravelInfo(){
       travelInfo='';
   data.forEach(function(item,index){
-       travelInfo+=
-       `
-       <li>
-       <span class="location">${item.area}</span>
-       <span class="starlevel">${item.rate}</span>
-       <img src=${item.imgUrl}alt="">
-       <div class="travelDescription">
-           <h2>${item.name}</h2>
-           <p>${item.description}</p>
-           <div class="travelCost">
-               <span><i class="fas fa-exclamation-circle"></i>剩下最後 ${item.group} 組</span>
-               <p>TWD<span>${item.price}</span></p>
-           </div>
-       </div>
-   </li>
-       `
+    travelInfo+=
+    `
+    <li>
+    <span class="location">${item.area}</span>
+    <span class="starlevel">${item.rate}</span>
+    <img src="${item.imgUrl}"alt="">
+    <div class="travelDescription">
+        <h2>${item.name}</h2>
+        <p>${item.description}</p>
+        <div class="travelCost">
+            <span><i class="fas fa-exclamation-circle"></i>剩下最後 ${item.group} 組</span>
+            <p>TWD<span>${item.price}</span></p>
+        </div>
+    </div>
+</li>
+    `
   })
   list.innerHTML=travelInfo;
 }
@@ -103,7 +139,7 @@ searchLocation.addEventListener('change',function(e){
             <li>
             <span class="location">${item.area}</span>
             <span class="starlevel">${item.rate}</span>
-            <img src=${item.imgUrl}alt="">
+            <img src="${item.imgUrl}"alt="">
             <div class="travelDescription">
                 <h2>${item.name}</h2>
                 <p>${item.description}</p>
@@ -123,7 +159,7 @@ searchLocation.addEventListener('change',function(e){
         <li>
         <span class="location">${item.area}</span>
         <span class="starlevel">${item.rate}</span>
-        <img src=${item.imgUrl}alt="">
+        <img src="${item.imgUrl}"alt="">
         <div class="travelDescription">
             <h2>${item.name}</h2>
             <p>${item.description}</p>
@@ -140,5 +176,11 @@ searchLocation.addEventListener('change',function(e){
    list.innerHTML=travelInfo;
    showSearchNum.textContent=`本次搜尋共 ${travelNum} 筆資料`;
 })
+
+
+
+
+
+
 
 showTravelInfo();
