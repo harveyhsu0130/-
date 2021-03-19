@@ -47,25 +47,7 @@ let data = [
   const travelGroup=document.querySelector('.travelGroup');
   const travelText=document.querySelector('.travelText');
 
-
-//   function showCard(){
-//     travelInfo+=
-//     `
-//     <li>
-//     <span class="location">${item.area}</span>
-//     <span class="starlevel">${item.rate}</span>
-//     <img src="${item.imgUrl}"alt="">
-//     <div class="travelDescription">
-//         <h2>${item.name}</h2>
-//         <p>${item.description}</p>
-//         <div class="travelCost">
-//             <span><i class="fas fa-exclamation-circle"></i>剩下最後 ${item.group} 組</span>
-//             <p>TWD<span>${item.price}</span></p>
-//         </div>
-//     </div>
-// </li>
-//     `
-// }
+  showTravelInfo(data);//首次渲染
 
 
   //新增套票
@@ -84,9 +66,9 @@ let data = [
       obj.imgUrl=travelImg.value;
       obj.area=travelLocation.value;
       obj.description=travelText.value;
-      obj.group=travelGroup.value;
-      obj.price=travelPrice.value;
-      obj.rate=travelLevel.value;
+      obj.group=Number(travelGroup.value);
+      obj.price=Number(travelPrice.value);
+      obj.rate=Number(travelLevel.value);
       data.push(obj);
       showTravelInfo();
       showSearchNum.textContent=``;
@@ -103,7 +85,7 @@ let data = [
 
 
   //顯示套票
-  function showTravelInfo(){
+  function showTravelInfo(data){
       travelInfo='';
   data.forEach(function(item,index){
     travelInfo+=
@@ -129,58 +111,21 @@ let data = [
 
 //搜尋套票
 searchLocation.addEventListener('change',function(e){
-    travelNum=0;
-    travelInfo='';
-    data.forEach(function(item,index){
-        if(e.target.value==item.area){
-            travelNum++;
-            travelInfo+=
-            `
-            <li>
-            <span class="location">${item.area}</span>
-            <span class="starlevel">${item.rate}</span>
-            <img src="${item.imgUrl}"alt="">
-            <div class="travelDescription">
-                <h2>${item.name}</h2>
-                <p>${item.description}</p>
-                <div class="travelCost">
-                    <span><i class="fas fa-exclamation-circle"></i>剩下最後 ${item.group} 組</span>
-                    <p>TWD<span>${item.price}</span></p>
-                </div>
-            </div>
-        </li>
-            `
-            
-           
-    }else if(e.target.value=="全部地區"){
-        travelNum++;
-        travelInfo+=
-        `
-        <li>
-        <span class="location">${item.area}</span>
-        <span class="starlevel">${item.rate}</span>
-        <img src="${item.imgUrl}"alt="">
-        <div class="travelDescription">
-            <h2>${item.name}</h2>
-            <p>${item.description}</p>
-            <div class="travelCost">
-                <span><i class="fas fa-exclamation-circle"></i>剩下最後 ${item.group} 組</span>
-                <p>TWD<span>${item.price}</span></p>
-            </div>
-        </div>
-    </li>
-        `
-    }
 
-    })
-   list.innerHTML=travelInfo;
-   showSearchNum.textContent=`本次搜尋共 ${travelNum} 筆資料`;
+  let areaFilter=[];
+  data.forEach(function(item){
+    if(e.target.value==item.area){
+      areaFilter.push(item);
+      showTravelInfo(areaFilter);
+      showSearchNum.textContent=`本次搜尋共 ${areaFilter.length} 筆資料`;
+    }else if(e.target.value=="全部地區"){
+      showTravelInfo(data);
+      showSearchNum.textContent=`本次搜尋共 ${data.length} 筆資料`;
+    }
+  })
+  
 })
 
 
 
 
-
-
-
-showTravelInfo();
